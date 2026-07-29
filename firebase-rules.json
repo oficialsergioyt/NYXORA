@@ -1,0 +1,64 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "players": {
+      ".read": true,
+      "$playerId": {
+        ".write": true,
+        ".validate": "$playerId.matches(/^PX-[A-Z0-9]{6}$/)",
+        "username": { ".validate": "newData.isString() && newData.val().length <= 16" },
+        "level": { ".validate": "newData.isNumber() && newData.val() >= (data.val() == null ? 0 : data.val())" },
+        "exp": { ".validate": "newData.isNumber() && newData.val() >= (data.val() == null ? 0 : data.val())" },
+        "rankId": { ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 200" },
+        "online": { ".validate": "newData.isBoolean()" },
+        "stats": {
+          "wins": { ".validate": "newData.isNumber() && newData.val() >= (data.val() == null ? 0 : data.val())" },
+          "losses": { ".validate": "newData.isNumber() && newData.val() >= (data.val() == null ? 0 : data.val())" }
+        }
+      }
+    },
+
+    "rooms": {
+      ".read": true,
+      "$roomId": {
+        ".write": true,
+        ".validate": "newData.hasChildren(['ownerId','name','type','maxPlayers','status'])",
+        "maxPlayers": { ".validate": "newData.isNumber() && newData.val() >= 2 && newData.val() <= 8" },
+        "type": { ".validate": "newData.val() == 'public' || newData.val() == 'private'" }
+      }
+    },
+
+    "matchmaking": {
+      ".read": true,
+      "$playerId": {
+        ".write": true,
+        ".validate": "$playerId.matches(/^PX-[A-Z0-9]{6}$/)"
+      }
+    },
+
+    "games": {
+      ".read": true,
+      "$gameId": {
+        ".write": true
+      }
+    },
+
+    "activity": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["at"]
+    },
+
+    "leaderboards": {
+      ".read": true,
+      ".write": false
+    },
+
+    "config": {
+      ".read": true,
+      ".write": false
+    }
+  }
+}
