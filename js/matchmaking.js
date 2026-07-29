@@ -99,7 +99,9 @@ const Matchmaking = {
       await FB.put(`games/${gameId}`, gameDoc);
       await FB.patch(`matchmaking/${opponent.playerId}`, { matchedGameId: gameId });
       await FB.delete(`matchmaking/${me.playerId}`);
-      await FB.delete(`matchmaking/${opponent.playerId}`);
+      // OJO: no borrar aquí la entrada del rival — es la que acabamos de
+      // marcar con matchedGameId y él todavía no la leyó. La borra él
+      // mismo en cuanto la detecta (ver rama "else" de abajo).
       this.active = false;
       clearInterval(this._widenTimer);
       this._onFound({ gameId, opponent });
@@ -110,6 +112,7 @@ const Matchmaking = {
       if (mine && mine.matchedGameId) {
         this.active = false;
         clearInterval(this._widenTimer);
+        await FB.delete(`matchmaking/${me.playerId}`).catch(() => {});
         this._onFound({ gameId: mine.matchedGameId, opponent });
         return true;
       }

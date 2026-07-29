@@ -8,13 +8,17 @@ const UI = {
 
   init() {
     this.root = document.getElementById("screen-root");
-    this.navEls = document.querySelectorAll("[data-nav]");
-    this.navEls.forEach(btn => btn.addEventListener("click", () => this.go(btn.dataset.nav)));
     this.connBadge = document.getElementById("conn-badge");
+    // Delegación de eventos: así funciona también con botones [data-nav]
+    // que se crean después dinámicamente (p.ej. los del dashboard).
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-nav]");
+      if (btn) this.go(btn.dataset.nav);
+    });
   },
 
   setActiveNav(screen) {
-    this.navEls.forEach(b => b.classList.toggle("active", b.dataset.nav === screen));
+    document.querySelectorAll("[data-nav]").forEach(b => b.classList.toggle("active", b.dataset.nav === screen));
   },
 
   go(screen, params = {}) {

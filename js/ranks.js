@@ -122,10 +122,14 @@ function buildBadgeSVG(rank) {
 
 function expCurveForTier(tierIdx, rankInTier) {
   // Curva exponencial global: cada rango cuesta más que el anterior, y los tiers altos escalan mucho más fuerte.
+  // El primer rango (globalIndex 0) siempre requiere 0 EXP: es el rango con el
+  // que arranca todo jugador nuevo, y si pidiera >0 la barra de progreso da
+  // porcentajes negativos.
   const globalIndex = tierIdx * RANKS_PER_TIER + rankInTier;
+  if (globalIndex === 0) return 0;
   const base = 300;
   const growth = 1.145;
-  return Math.round(base * Math.pow(growth, globalIndex));
+  return Math.round(base * Math.pow(growth, globalIndex - 1));
 }
 
 function buildRanks() {

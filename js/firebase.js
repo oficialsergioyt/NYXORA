@@ -19,9 +19,10 @@
 
 const FB = (() => {
   function url(path, query = "") {
+    const base = FIREBASE_DATABASE_URL.replace(/\/+$/, "");
     const clean = path.replace(/^\/+/, "");
     const sep = query ? "?" + query : "";
-    return `${FIREBASE_DATABASE_URL}/${clean}.json${sep}`;
+    return `${base}/${clean}.json${sep}`;
   }
 
   async function handle(res) {
