@@ -1,0 +1,18 @@
+.rank-badge { display: inline-flex; align-items: center; justify-content: center; filter: drop-shadow(0 0 6px color-mix(in srgb, var(--rank-color) 60%, transparent)); }
+.rank-badge-svg { width: 100%; height: 100%; }
+
+.rank-xs { width: 26px; height: 26px; }
+.rank-sm { width: 40px; height: 40px; }
+.rank-md { width: 56px; height: 56px; }
+.rank-lg { width: 96px; height: 96px; margin: 0 auto 10px; }
+
+.rank-badge[data-rarity="mythic"],
+.rank-badge[data-rarity="divine"],
+.rank-badge[data-rarity="transcendent"] {
+  animation: badge-shimmer 2.6s ease-in-out infinite;
+}
+
+@keyframes badge-shimmer {
+  0%, 100% { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--rank-color) 60%, transparent)); }
+  50% { filter: drop-shadow(0 0 16px color-mix(in srgb, var(--rank-color) 90%, transparent)); }
+}
