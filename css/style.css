@@ -40,8 +40,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 700; letter-spacing:
 .muted { color: var(--muted); }
 .small { font-size: 0.8rem; }
 
-.app-shell { min-height: 100vh; padding-bottom: 84px; opacity: 0; pointer-events: none; }
-.app-shell.logged-in { opacity: 1; pointer-events: auto; }
+.app-shell { min-height: 100vh; padding-bottom: 84px; }
 
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
